@@ -1,7 +1,7 @@
 import operator
 import numpy as np
 
-test = True
+test = False
 
 if test == True:
     input_path = 'day1/sample.txt'
@@ -29,11 +29,11 @@ def move_dial(pos, instruction):
     elif new_pos > 99:
         new_pos_adj -= 100
 
-    passed_0 = int(np.floor((new_pos_adj + distance) / 100))
+    passed_0 = int(np.floor((new_pos_adj + distance - 1) / 100))
 
     if new_pos_adj == 0:
         passed_0 += 1
-    if (pos == 0) & (passed_0 > 0):
+    if (pos == 0) & (passed_0 > 0) & (distance < 100):
         passed_0 -= 1
     
     return new_pos_adj, passed_0
@@ -54,4 +54,4 @@ def find_password(lines, verbose=False):
 
     return zero_count
 
-# print(find_password(lines))
+print(find_password(lines))
