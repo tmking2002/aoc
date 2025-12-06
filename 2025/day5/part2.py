@@ -1,7 +1,7 @@
 test = False
 
 if test == True:
-    input_path = 'day5/sample_2.txt'
+    input_path = 'day5/sample.txt'
 else:
     input_path = 'day5/input.txt'
 
@@ -21,7 +21,6 @@ def simplify_ranges(range_list):
     
     iter = 0
     while True:
-        print(iter)
         to_remove = set()
         to_add = set()
         removals_iter = False
@@ -32,13 +31,21 @@ def simplify_ranges(range_list):
 
             next_tuple = range_list[i+1]
 
-            if (next_tuple[0] <= cur_tuple[1]):
+            if (next_tuple[0] <= cur_tuple[1]) & (next_tuple[1] <= cur_tuple[1]):
+                to_remove.add(next_tuple)
+                removals_iter = True
+
+            elif (next_tuple[0] <= cur_tuple[1]):
                 to_remove.add(cur_tuple)
                 to_remove.add(next_tuple)
 
                 to_add.add((cur_tuple[0], next_tuple[1]))
 
                 removals_iter = True
+
+        # print(to_remove, to_add)
+        # print(range_list)
+        # print()
 
         for remove in to_remove:
             range_list.remove(remove)
@@ -62,7 +69,7 @@ simplified_range_list = simplify_ranges(range_list)
 
 sum = 0
 
-for range in range_list:
+for range in simplified_range_list:
     sum += (range[1] - range[0] + 1)
 
 print(sum)
